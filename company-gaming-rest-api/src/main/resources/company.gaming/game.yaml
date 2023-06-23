@@ -1,0 +1,56 @@
+openapi: "3.0.3"
+info:
+  description: Operations on Game entity
+  version: 1.0.0
+  title: Rater Service
+servers:
+  - url: "{protocol}://{environment}.company.net"
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      environment:
+        enum:
+          - dev
+          - prod
+        default: localhost
+tags:
+  - name: book
+
+paths:
+  /api/company-gaming/search/{id}:
+    get:
+      tags:
+        - book
+      summary: "Fetch game"
+      operationId: "fetchGame"
+      parameters:
+        - name: id
+          in: path
+          description: ID of the resource
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/fetchSearchResults'
+components:
+  responses:
+    fetchSearchResults:
+      description: Some desc
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Game'
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
